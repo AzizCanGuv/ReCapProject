@@ -31,9 +31,10 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public List<Color> Get(Expression<Func<Color, bool>> filter)
-        {
-            using (ReCapProjectDatabase context = new ReCapProjectDatabase())
+
+        public Color Get(Expression<Func<Color, bool>> filter) 
+        { 
+            using (ReCapProjectDatabase context = new ReCapProjectDatabase()) 
             {
                 return context.Set<Color>().SingleOrDefault(filter);
             }

@@ -31,13 +31,14 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public List<Brand> Get(Expression<Func<Brand, bool>> filter)
+
+        public Brand Get(Expression<Func<Brand, bool>> filter)
         {
             using (ReCapProjectDatabase context = new ReCapProjectDatabase())
             {
                 return context.Set<Brand>().SingleOrDefault(filter);
             }
-            
+
         }
 
         public List<Brand> GetAll(Expression<Func<Brand, bool>> filter = null)

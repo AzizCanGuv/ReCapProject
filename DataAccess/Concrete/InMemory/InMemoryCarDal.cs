@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -63,6 +64,11 @@ namespace DataAccess.Concrete.InMemory
 
         }
 
+        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Car> GetById(int id)
         {
             return _cars.Where(c => c.Id == id).ToList();
@@ -82,6 +88,11 @@ namespace DataAccess.Concrete.InMemory
             car.ModelYear = _carToUpdate.ModelYear;
 
 
+        }
+
+        Car IEntityRepository<Car>.Get(Expression<Func<Car, bool>> filter)
+        {
+            throw new NotImplementedException();
         }
     }
 }
