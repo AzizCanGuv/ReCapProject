@@ -10,36 +10,58 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            ShowCarData();
+            Console.WriteLine();
+            ShowBrandData();
+            Console.WriteLine();
+            ShowColorData();
+        }
 
+        public static void ShowCarData()
+        {
             CarManager carManager = new CarManager(new EfCarDal());
 
+            var result = carManager.GetCarDetails();
 
-
-
-            
-
-            
-
-            
-            // Added carManager.Add(new Car{Id = 10, BrandId ="Opel Corsa" ,ColorId ="Beyaz" ,DailyPrice =100 ,ModelYear =2015 ,Description ="Manuel vites Arka bagaj boyalı" });
-            // Added carManager.Add(new Car { Id = 11, BrandId = "Toyota Corolla", ColorId = "Koyu yeşil", DailyPrice =125 , ModelYear = 2020, Description = "Otomatik vites Kazasız" });
-            //ShowData();
-
-            foreach (var car in carManager.GetCarDetails())
+            if (result.Success)
             {
-                Console.WriteLine(car.CarName + "   " + car.BrandName + "   " + car.DailyPrice + "   " + car.ColorName);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.CarName + "   " + car.BrandName + "   " + car.DailyPrice + "   " + car.ColorName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
 
         }
 
-        public static void ShowData()
+
+        public static void ShowBrandData()
         {
-            CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetAll())
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+
+
+
+            ;
+
+            foreach (var brand in brandManager.GetAll().Data)
             {
-                Console.WriteLine(car.BrandId+ "  " + car.ColorId + "  " + car.ModelYear + "  " + car.DailyPrice + "  " +
-                                  car.Description);
+                Console.WriteLine(brand.Id + "    " + brand.Name);
             }
+        }
+
+        public static void ShowColorData()
+        {
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+
+
+            foreach (var color in colorManager.GetAll().Data)
+            {
+                Console.WriteLine(color.Id + "    " + color.Name);
+            }
+
         }
     }
 }
