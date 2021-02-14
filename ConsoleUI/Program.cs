@@ -10,10 +10,10 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            ShowCarData();
-            Console.WriteLine();
-            ShowBrandData();
-            Console.WriteLine();
+            //ShowCarData();
+            //Console.WriteLine();
+            //ShowBrandData();
+            //Console.WriteLine();
             ShowColorData();
         }
 
@@ -27,7 +27,7 @@ namespace ConsoleUI
             {
                 foreach (var car in result.Data)
                 {
-                    Console.WriteLine(car.CarName + "   " + car.BrandName + "   " + car.DailyPrice + "   " + car.ColorName);
+                    Console.WriteLine(car.CarId + "   " + car.CarName + "   " + car.BrandName + "   " + car.DailyPrice + "   " + car.ColorName + "   " +car.Description);
                 }
             }
             else
