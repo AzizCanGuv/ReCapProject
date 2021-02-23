@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using FluentValidation;
+
 
 namespace Business.Concrete
 {
@@ -20,6 +24,15 @@ namespace Business.Concrete
 
         public IResult Add(User user)
         {
+            //Bad Version of validation
+
+            //var context = new ValidationContext<User>(user);
+            //UserValidator productValidator = new UserValidator();
+            //var result = productValidator.Validate(context);
+            //if (!result.IsValid)
+            //{
+            //    throw FluentValidaton.ValidationException(result.Errors);
+            //}
             _userDal.Add(user);
             return new SuccessResult(Messages.UserAdded);
         }
