@@ -57,6 +57,10 @@ namespace Business.Constants
         public static string RentalDetailsListed = "Rental details listed";
 
         public static string CarNotAvalible = "The car has not been delivered yet";
-
+        internal static string ImageIsAdded;
+        internal static string ImageCapacityExceed;
+        internal static string CarImageIsDeleted;
+        internal static bool CarImageListedById;
+        internal static string AllTheCarImagesListed;
     }
 }
