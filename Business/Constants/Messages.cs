@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
+using Entities.Concrete;
 
 namespace Business.Constants
 {
@@ -56,11 +58,24 @@ namespace Business.Constants
         public static string RentalListById = "Rental listed by id";
         public static string RentalDetailsListed = "Rental details listed";
 
+        //CAR IMAGE MESSAGES
+
         public static string CarNotAvalible = "The car has not been delivered yet";
-        internal static string ImageIsAdded;
-        internal static string ImageCapacityExceed;
-        internal static string CarImageIsDeleted;
-        internal static bool CarImageListedById;
-        internal static string AllTheCarImagesListed;
+        public static string ImageIsAdded = "Image is added";
+        public static string ImageCapacityExceed = "Image capacity Exceed";
+        public static string CarImageIsDeleted= "Car image is deleted";
+        public static string CarImageListedById= "Car image is listed by id";
+        public static string AllTheCarImagesListed="Car images are Listed";
+
+        //AUTHENTICATION MESSAGES
+
+        public static string ClaimsListed = "Claims Listed";
+        public static string UserNotFound ="User not found!";
+        public static string PasswordError= "Wrong Password!";
+        public static string SuccessfullLogin= "Successfull Login!";
+        public static string UserExists="User is already registered";
+        public static string UserIsRegistered="User registration completed";
+        public static string AccessTokenCreated= "Access token created";
+        public static string AuthorizationDenied="Authorization Denied!!!";
     }
 }
