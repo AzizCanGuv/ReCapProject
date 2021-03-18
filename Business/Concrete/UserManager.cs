@@ -5,7 +5,9 @@ using System.Text;
 using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Transaction;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -24,6 +26,9 @@ namespace Business.Concrete
             _userDal = userDal;
         }
         [ValidationAspect(typeof(UserValidator))]
+        [CacheAspect]
+        [CacheRemoveAspect("IUserService.Get")]
+        [TransactionScopeAspect]
         public IResult Add(User user)
         {
             //Bad Version of validation
@@ -38,13 +43,14 @@ namespace Business.Concrete
             _userDal.Add(user);
             return new SuccessResult(Messages.UserAdded);
         }
-
+        [TransactionScopeAspect]
+        [CacheRemoveAspect("IUserService.Get")]
         public IResult Delete(User user)
         {
             _userDal.Delete(user);
             return new SuccessResult(Messages.UserDeleted);
         }
-
+        [TransactionScopeAspect]
         public IDataResult<User> Get(int id)
         {
             return new SuccessDataResult<User>(_userDal.Get(p => p.Id == id), Messages.UserListById);

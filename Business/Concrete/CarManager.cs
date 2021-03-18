@@ -6,7 +6,9 @@ using Business.Abstract;
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Transaction;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -26,16 +28,13 @@ namespace Business.Concrete
         }
         [SecuredOperation("product.add, admin")]
         [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("IProductService.Get")]
         public IResult Add(Car car)
         {
-            // Şeklinde validation yapılabilir 
-            //ValidationTool.Validate(new CarValidator(),car);
-            
-            
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
         }
-
+        
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
             if (DateTime.Now.Hour==23)
@@ -45,27 +44,31 @@ namespace Business.Concrete
 
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
-
+        [TransactionScopeAspect]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Delete(Car car)
         {
             
             _carDal.Delete(car);
             return new SuccessResult(Messages.CarDeleted);
         }
-
+        [CacheAspect]
         public IDataResult<Car> Get(int id)
         {
-            
-
-            return new SuccessDataResult<Car>(_carDal.Get(p => p.Id == id), Messages.CarGet );
+            var result = _carDal.Get(c => c.Id == id);
+            if (result != null)
+                return new SuccessDataResult<Car>(result);
+            else
+                return new ErrorDataResult<Car>(result, "NotFound");
         }
-
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
             
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.AllCarList);
         }
-
+        [TransactionScopeAspect]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Update(Car car)
         {
             
